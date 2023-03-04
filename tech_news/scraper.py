@@ -1,6 +1,7 @@
 import requests
 import time
 from requests.exceptions import HTTPError, ReadTimeout
+from bs4 import BeautifulSoup
 
 
 # Requisito 1
@@ -19,7 +20,10 @@ def fetch(url):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+    soup = BeautifulSoup(html_content, "html.parser")
+    cards = soup.find_all("h2", class_="entry-title")
+    links = [link.find("a", href=True)['href'] for link in cards]
+    return links
 
 
 # Requisito 3
