@@ -1,5 +1,6 @@
 import requests
 import time
+import re
 from requests.exceptions import HTTPError, ReadTimeout
 from bs4 import BeautifulSoup
 
@@ -37,7 +38,20 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    soup = BeautifulSoup(html_content, "html.parser")
+    news_info = {
+        "url": soup.find("link", {"rel": "canonical"})['href'],
+        "title": soup.find("h1", class_="entry-title").text.strip(),
+        "timestamp": soup.find("li", class_="meta-date").text,
+        "writer": soup.find("a", class_="url fn n").text,
+        "reading_time": int(re.findall(r"\d+",
+                            soup.find("li",
+                                       class_="meta-reading-time").text)[0]),
+        "summary": soup.find("div",
+                             class_="entry-content").find("p").text.strip(),
+        "category": soup.find("span", class_="label").text,
+    }
+    return news_info
 
 
 # Requisito 5
