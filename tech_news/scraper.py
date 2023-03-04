@@ -1,6 +1,20 @@
+import requests
+import time
+from requests.exceptions import HTTPError, ReadTimeout
+
+
 # Requisito 1
 def fetch(url):
-    """Seu código deve vir aqui"""
+    time.sleep(1)
+    HEADERS = {"user-agent": "Fake user-agent"}
+
+    try:
+        response = requests.get(url, headers=HEADERS, timeout=3)
+        response.raise_for_status()
+    except (ReadTimeout, HTTPError):
+        return None
+
+    return response.text
 
 
 # Requisito 2
