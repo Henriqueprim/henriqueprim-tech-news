@@ -24,4 +24,6 @@ def search_by_date(date):
 
 # Requisito 9
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    news_list = search_news({"category": re.compile(rf"{category}", re.I)})
+
+    return [(news['title'], news['url']) for news in news_list]
