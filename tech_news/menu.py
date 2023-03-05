@@ -20,28 +20,51 @@ def analyzer_menu():
         " 5 - Sair.\n"
     )
 
+    options = {
+        '0': get_news,
+        '1': get_by_title,
+        '2': get_by_date,
+        '3': get_by_category,
+        '4': get_top_five,
+        '5': exit_app
+    }
+
     try:
-        if user_input == "0":
-            print("Digite quantas notícias serão buscadas:")
-            amount = int(input())
-            print(get_tech_news(amount))
-        elif user_input == "1":
-            print("Digite o título:")
-            title = input()
-            print(search_by_title(title))
-        elif user_input == "2":
-            print("Digite a data no formato aaaa-mm-dd:")
-            date = input()
-            print(search_by_date(date))
-        elif user_input == "3":
-            print("Digite a categoria:")
-            category = input()
-            print(search_by_category(category))
-        elif user_input == "4":
-            print(top_5_categories())
-        elif user_input == "5":
-            print("Encerrando script\n")
+        if user_input in options.keys():
+            options[user_input]()
         else:
             sys.stderr.write("Opção inválida\n")
     except ValueError as e:
         sys.stderr.write(str(e))
+
+
+def get_news():
+    print("Digite quantas notícias serão buscadas:")
+    amount = int(input())
+    print(get_tech_news(amount))
+
+
+def get_by_title():
+    print("Digite o título:")
+    title = input()
+    print(search_by_title(title))
+
+
+def get_by_date():
+    print("Digite a data no formato aaaa-mm-dd:")
+    date = input()
+    print(search_by_date(date))
+
+
+def get_by_category():
+    print("Digite a categoria:")
+    category = input()
+    print(search_by_category(category))
+
+
+def get_top_five():
+    print(top_5_categories())
+
+
+def exit_app():
+    print("Encerrando script\n")
